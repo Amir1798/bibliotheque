@@ -1,7 +1,13 @@
 // frontend/js/app.js
 
 // ===== CONFIGURATION =====
-const API_URL = 'http://localhost:3000/api';
+// Détection automatique de l'URL de l'API
+// En local : http://localhost:3000/api
+// En production : https://bibliotheque-production-6cd3.up.railway.app/api
+const API_URL = window.location.origin + '/api';
+
+// Pour debug - Affiche l'URL dans la console
+console.log('📡 API_URL:', API_URL);
 
 // ===== ÉTAT DE L'APPLICATION =====
 let livres = [];
@@ -66,6 +72,9 @@ document.querySelectorAll('nav button').forEach(button => {
 async function chargerStatistiques() {
     try {
         const response = await fetch(`${API_URL}/statistiques`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const stats = await response.json();
         
         document.getElementById('totalLivres').textContent = stats.totalLivres || 0;
@@ -82,12 +91,18 @@ async function chargerStatistiques() {
  */
 async function chargerLivres() {
     try {
+        console.log('📡 Chargement des livres depuis:', `${API_URL}/livres`);
         const response = await fetch(`${API_URL}/livres`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         livres = await response.json();
         afficherLivres(livres);
     } catch (error) {
         console.error('Erreur lors du chargement des livres:', error);
-        document.getElementById('livresList').innerHTML = '<p>❌ Erreur lors du chargement des livres</p>';
+        document.getElementById('livresList').innerHTML = `<p>❌ Erreur lors du chargement des livres</p><p style="font-size:12px;color:#666;">${error.message}</p>`;
     }
 }
 
@@ -124,12 +139,18 @@ function afficherLivres(livres) {
  */
 async function chargerUtilisateurs() {
     try {
+        console.log('📡 Chargement des utilisateurs depuis:', `${API_URL}/utilisateurs`);
         const response = await fetch(`${API_URL}/utilisateurs`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         utilisateurs = await response.json();
         afficherUtilisateurs(utilisateurs);
     } catch (error) {
         console.error('Erreur lors du chargement des utilisateurs:', error);
-        document.getElementById('utilisateursList').innerHTML = '<p>❌ Erreur lors du chargement des utilisateurs</p>';
+        document.getElementById('utilisateursList').innerHTML = `<p>❌ Erreur lors du chargement des utilisateurs</p><p style="font-size:12px;color:#666;">${error.message}</p>`;
     }
 }
 
@@ -166,10 +187,18 @@ function afficherUtilisateurs(utilisateurs) {
  */
 async function chargerGenres() {
     try {
+        console.log('📡 Chargement des genres depuis:', `${API_URL}/genres`);
         const response = await fetch(`${API_URL}/genres`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const genres = await response.json();
         
         const select = document.getElementById('genre');
+        // Vider le select avant d'ajouter
+        select.innerHTML = '<option value="">-- Choisissez un genre --</option>';
         genres.forEach(genre => {
             const option = document.createElement('option');
             option.value = genre;
@@ -387,11 +416,17 @@ document.getElementById('btnRefreshLivres').addEventListener('click', chargerLiv
  */
 async function init() {
     console.log('🚀 Initialisation de la bibliothèque...');
-    await chargerGenres();
-    await chargerStatistiques();
-    await chargerLivres();
-    await chargerUtilisateurs();
-    console.log('✅ Application prête !');
+    console.log('📡 API URL:', API_URL);
+    
+    try {
+        await chargerGenres();
+        await chargerStatistiques();
+        await chargerLivres();
+        await chargerUtilisateurs();
+        console.log('✅ Application prête !');
+    } catch (error) {
+        console.error('❌ Erreur lors de l\'initialisation:', error);
+    }
 }
 
 // Lancer l'application

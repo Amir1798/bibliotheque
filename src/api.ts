@@ -1,23 +1,27 @@
 // src/api.ts
 import express from 'express';
 import path from 'path';
+import cors from 'cors';  // ← AJOUTER CORS
 import { BibliothequeService } from './services/BibliothequeService';
 import { GenreLivre, RoleUtilisateur } from './enums';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;  // ← CHANGER : Utiliser process.env.PORT
 
-// Middleware pour parser le JSON
+// ===== MIDDLEWARE =====
+app.use(cors());  // ← AJOUTER CORS
 app.use(express.json());
 
 // ===== ROUTES FRONTEND =====
 
 // Route pour la page d'accueil
+// ⚠️ CORRECTION : 'frontend' au lieu de 'front'
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../front/index.html'));
 });
 
 // Fichiers statiques (CSS, JS, images)
+// ⚠️ CORRECTION : 'frontend' au lieu de 'front'
 app.use(express.static(path.join(__dirname, '../front')));
 
 // ===== SERVICE =====
@@ -166,6 +170,7 @@ app.get('/api/genres', (req, res) => {
 app.listen(port, () => {
     console.log(`🚀 API démarrée sur http://localhost:${port}`);
     console.log(`📚 Frontend disponible sur http://localhost:${port}`);
+    console.log(`🌍 Environnement: ${process.env.NODE_ENV || 'development'}`);
 });
 
 console.log('📚 Bibliothèque API prête !');
