@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Bibliothèque en Ligne</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header>
+            <h1>📚 Bibliothèque en Ligne</h1>
+            <div class="stats" id="stats">
+                <span>📖 Livres: <strong id="totalLivres">0</strong></span>
+                <span>✅ Disponibles: <strong id="livresDisponibles">0</strong></span>
+                <span>❌ Empruntés: <strong id="livresEmpruntes">0</strong></span>
+                <span>👥 Utilisateurs: <strong id="totalUtilisateurs">0</strong></span>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <button class="active" data-view="livres">📕 Livres</button>
+            <button data-view="utilisateurs">👤 Utilisateurs</button>
+            <button data-view="emprunts">📖 Emprunts</button>
+            <button data-view="ajout-livre">➕ Ajouter Livre</button>
+            <button data-view="ajout-utilisateur">➕ Ajouter Utilisateur</button>
+        </nav>
+
+        <!-- Contenu principal -->
+        <main>
+            <!-- Vue Livres -->
+            <section id="view-livres" class="view active">
+                <h2>📕 Liste des Livres</h2>
+                <div class="search-bar">
+                    <input type="text" id="searchLivre" placeholder="🔍 Rechercher un livre...">
+                    <button id="btnRefreshLivres">🔄 Actualiser</button>
+                </div>
+                <div id="livresList" class="card-grid">
+                    <!-- Les livres seront chargés ici -->
+                </div>
+            </section>
+
+            <!-- Vue Utilisateurs -->
+            <section id="view-utilisateurs" class="view">
+                <h2>👤 Liste des Utilisateurs</h2>
+                <div id="utilisateursList" class="card-grid">
+                    <!-- Les utilisateurs seront chargés ici -->
+                </div>
+            </section>
+
+            <!-- Vue Emprunts -->
+            <section id="view-emprunts" class="view">
+                <h2>📖 Emprunter un Livre</h2>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label for="empruntLivreId">ID du Livre</label>
+                        <input type="number" id="empruntLivreId" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="empruntUtilisateurId">ID de l'Utilisateur</label>
+                        <input type="number" id="empruntUtilisateurId" placeholder="Ex: 1">
+                    </div>
+                    <button id="btnEmprunter">📖 Emprunter</button>
+                    <div id="empruntResultat"></div>
+                </div>
+
+                <h2 style="margin-top: 30px;">📖 Retourner un Livre</h2>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label for="retourLivreId">ID du Livre</label>
+                        <input type="number" id="retourLivreId" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="retourUtilisateurId">ID de l'Utilisateur</label>
+                        <input type="number" id="retourUtilisateurId" placeholder="Ex: 1">
+                    </div>
+                    <button id="btnRetourner">📖 Retourner</button>
+                    <div id="retourResultat"></div>
+                </div>
+            </section>
+
+            <!-- Vue Ajout Livre -->
+            <section id="view-ajout-livre" class="view">
+                <h2>➕ Ajouter un Livre</h2>
+                <form id="formAjoutLivre" class="form-card">
+                    <div class="form-group">
+                        <label for="titre">Titre *</label>
+                        <input type="text" id="titre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="auteur">Auteur *</label>
+                        <input type="text" id="auteur" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="isbn">ISBN *</label>
+                        <input type="text" id="isbn" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Genre *</label>
+                        <select id="genre" required>
+                            <option value="">-- Choisissez un genre --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="annee">Année de publication *</label>
+                        <input type="number" id="annee" required>
+                    </div>
+                    <button type="submit">✅ Ajouter le livre</button>
+                </form>
+            </section>
+
+            <!-- Vue Ajout Utilisateur -->
+            <section id="view-ajout-utilisateur" class="view">
+                <h2>➕ Ajouter un Utilisateur</h2>
+                <form id="formAjoutUtilisateur" class="form-card">
+                    <div class="form-group">
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom *</label>
+                        <input type="text" id="prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Téléphone *</label>
+                        <input type="tel" id="telephone" required>
+                    </div>
+                    <button type="submit">✅ Ajouter l'utilisateur</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
