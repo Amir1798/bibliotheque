@@ -69,6 +69,7 @@ Application web complète de gestion de bibliothèque avec **TypeScript**, **Exp
 
 ---
 
+
 ## 🚀 Installation et démarrage
 
 ### Prérequis
@@ -91,3 +92,9 @@ npm run build
 
 # Lancer en développement
 npm run dev
+
+## 🌐 Démo en ligne
+
+L'application est disponible en ligne :
+
+🔗 [https://bibliotheque-production-6cd3.up.railway.app](https://bibliotheque-production-6cd3.up.railway.app)
